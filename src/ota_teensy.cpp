@@ -179,7 +179,15 @@ void OTA(AsyncWebServerRequest *request, String filename, size_t index, uint8_t 
           else if (hex.code == 0) { // if data record
             uint32_t addr = buffer_addr + hex.base + hex.addr - FLASH_BASE_ADDR;
             if (hex.max > (FLASH_BASE_ADDR + buffer_size)) {
+              Serial.print("addr: "); Serial.println(addr);
+              Serial.print("buffer_addr: "); Serial.println(buffer_addr);
+              Serial.print("buffer_size: "); Serial.println(buffer_size);
+              Serial.print("hex.base: "); Serial.println(hex.base);
+              Serial.print("hex.addr: "); Serial.println(hex.addr);
+              Serial.print("hex.max: "); Serial.println(hex.max);
+              Serial.print("FLASH_BASE_ADDR: "); Serial.println(FLASH_BASE_ADDR);
               Serial.printf( "abort - max address %08lX too large\n", hex.max );
+              
               return request->send(400, "text/plain", "abort - max address too large");
             }
             else if (!IN_FLASH(buffer_addr)) {
